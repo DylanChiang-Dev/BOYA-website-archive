@@ -8,6 +8,16 @@ test("traditional Chinese home exposes both product paths", async ({ page }) => 
   await expect(page.getByText("把判斷留給研究者")).toBeVisible();
 });
 
+test("hero demo switches between real product views", async ({ page }) => {
+  await page.goto("/zh-hant/");
+  const image = page.locator("[data-demo-image]");
+  await expect(image).toHaveAttribute("src", "/images/desktop-literature.png");
+  const figureButton = page.getByRole("button", { name: "圖表與程式" });
+  await figureButton.click();
+  await expect(figureButton).toHaveAttribute("aria-pressed", "true");
+  await expect(image).toHaveAttribute("src", "/images/desktop-figure.png");
+});
+
 test("language switch preserves the current page", async ({ page }) => {
   await page.goto("/zh-hant/skills/");
   const languageLink = page.getByRole("link", { name: "简体中文" });

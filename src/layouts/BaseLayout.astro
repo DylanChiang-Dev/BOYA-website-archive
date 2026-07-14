@@ -10,7 +10,7 @@ interface Props {
   image?: string;
 }
 
-const { locale, title, description, image = "/images/desktop-hero.png" } = Astro.props;
+const { locale, title, description, image = "/images/desktop-literature.png" } = Astro.props;
 const t = messages[locale];
 const other = alternateLocale(locale);
 const path = Astro.url.pathname;

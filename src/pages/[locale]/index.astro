@@ -12,6 +12,12 @@ const copy = zh ? {
   description: "BOYA 博雅把免費、開源的 AI 研究 Skills 與本地優先的 Desktop 工作台連在一起，陪人文社科研究者從讀文獻走到寫論文。",
   heroBody: "十五個開源 Skills 管研究流程，Desktop 管文件、Notebook、執行紀錄與證據。每一個只有你能決定的關卡，都會停下來等你拍板。",
   heroNote: "Skills 永久免費 · Desktop Preview 免費",
+  demoLabel: "實際介面示範",
+  demos: [
+    ["文獻審查", "/images/desktop-literature.png", "BOYA Desktop 文獻檢索、引用審查與 PDF 產出示範"],
+    ["圖表與程式", "/images/desktop-figure.png", "BOYA Desktop 圖表、程式碼與執行紀錄示範"],
+    ["Notebook", "/images/desktop-notebook.png", "BOYA Desktop Notebook 與研究任務示範"],
+  ],
   methodEyebrow: "不是全自動論文機",
   methodTitle: "把判斷留給研究者",
   methodBody: "BOYA 自動處理檢索、整理、格式與檢查等可委派工作，但不替你選研究問題、理論、方法、解釋或最終主張。",
@@ -34,6 +40,12 @@ const copy = zh ? {
   description: "BOYA 博雅把免费、开源的 AI 研究 Skills 与本地优先的 Desktop 工作台连在一起，陪人文社科研究者从读文献走到写论文。",
   heroBody: "十五个开源 Skills 管研究流程，Desktop 管文件、Notebook、执行记录与证据。每一个只有你能决定的关卡，都会停下来等你拍板。",
   heroNote: "Skills 永久免费 · Desktop Preview 免费",
+  demoLabel: "实际界面演示",
+  demos: [
+    ["文献审查", "/images/desktop-literature.png", "BOYA Desktop 文献检索、引用审查与 PDF 产出演示"],
+    ["图表与程序", "/images/desktop-figure.png", "BOYA Desktop 图表、程序代码与执行记录演示"],
+    ["Notebook", "/images/desktop-notebook.png", "BOYA Desktop Notebook 与研究任务演示"],
+  ],
   methodEyebrow: "不是全自动论文机",
   methodTitle: "把判断留给研究者",
   methodBody: "BOYA 自动处理检索、整理、格式与检查等可委派工作，但不替你选研究问题、理论、方法、解释或最终主张。",
@@ -56,6 +68,15 @@ const copy = zh ? {
 ---
 <BaseLayout locale={locale} title={`${t.common.brand}｜${t.common.tagline}`} description={copy.description}>
   <section class="home-hero">
+    <div class="hero-demo" aria-label={copy.demoLabel}>
+      <img data-demo-image src={copy.demos[0][1]} width="1600" height="1000" alt={copy.demos[0][2]} />
+      <span class="demo-label">{copy.demoLabel}</span>
+      <div class="demo-switcher" role="group" aria-label={copy.demoLabel}>
+        {copy.demos.map(([label, src, alt], index) => (
+          <button type="button" data-demo-src={src} data-demo-alt={alt} aria-pressed={index === 0 ? "true" : "false"}>{label}</button>
+        ))}
+      </div>
+    </div>
     <div class="container hero-inner">
       <div class="hero-copy">
         <p class="eyebrow">{t.common.tagline}</p>
@@ -84,7 +105,7 @@ const copy = zh ? {
 
   <section class="band">
     <div class="container product-band">
-      <div class="product-shot"><img src="/images/desktop-workflow.png" width="1368" height="1000" alt={zh ? "BOYA Desktop 研究工作流介面" : "BOYA Desktop 研究工作流界面"} loading="lazy" /></div>
+      <div class="product-shot"><img src="/images/desktop-literature.png" width="1600" height="1000" alt={zh ? "BOYA Desktop 文獻審查與 PDF 產出示範" : "BOYA Desktop 文献审查与 PDF 产出演示"} loading="lazy" /></div>
       <div>
         <p class="eyebrow">{copy.desktopEyebrow}</p>
         <h2>{copy.desktopTitle}</h2>
@@ -108,4 +129,18 @@ const copy = zh ? {
       <div><p class="lede">{copy.supportBody}</p><a class="button" href={localePath(locale, "community")}>{t.action.contact}<ArrowRight size={18} /></a></div>
     </div>
   </section>
+<script>
+  const image = document.querySelector<HTMLImageElement>("[data-demo-image]");
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-demo-src]");
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    if (!image || button.getAttribute("aria-pressed") === "true") return;
+    image.classList.add("is-switching");
+    window.setTimeout(() => {
+      image.src = button.dataset.demoSrc || image.src;
+      image.alt = button.dataset.demoAlt || image.alt;
+      buttons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
+      image.classList.remove("is-switching");
+    }, 120);
+  }));
+</script>
 </BaseLayout>
