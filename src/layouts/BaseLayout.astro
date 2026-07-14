@@ -1,0 +1,99 @@
+---
+import { GitFork, Menu } from "@lucide/astro";
+import { alternateLocale, localeLabels, localePath, messages, type Locale } from "../data/i18n";
+import "../styles/global.css";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { locale, title, description, image = "/images/desktop-hero.png" } = Astro.props;
+const t = messages[locale];
+const other = alternateLocale(locale);
+const path = Astro.url.pathname;
+const otherPath = path.replace(`/${locale}/`, `/${other}/`);
+const canonical = new URL(path, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+const nav = [
+  [t.nav.home, localePath(locale)],
+  [t.nav.skills, localePath(locale, "skills")],
+  [t.nav.desktop, localePath(locale, "desktop")],
+  [t.nav.docs, localePath(locale, "docs")],
+  [t.nav.community, localePath(locale, "community")],
+] as const;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "BOYA 博雅",
+  url: Astro.site?.toString(),
+  inLanguage: locale === "zh-hant" ? "zh-Hant" : "zh-Hans",
+  description,
+};
+---
+
+<!doctype html>
+<html lang={locale === "zh-hant" ? "zh-Hant" : "zh-Hans"}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f5ef" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-Hant" href={new URL(path.replace(`/${locale}/`, "/zh-hant/"), Astro.site)} />
+    <link rel="alternate" hreflang="zh-Hans" href={new URL(path.replace(`/${locale}/`, "/zh-hans/"), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(path.replace(`/${locale}/`, "/zh-hant/"), Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BOYA 博雅" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{locale === "zh-hant" ? "跳到主要內容" : "跳到主要内容"}</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href={localePath(locale)}>
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span>{t.common.brand}</span>
+        </a>
+        <nav class="desktop-nav" aria-label={locale === "zh-hant" ? "主要導覽" : "主要导航"}>
+          {nav.map(([label, href]) => <a href={href} aria-current={path === href ? "page" : undefined}>{label}</a>)}
+          <a href="https://github.com/DylanChiang-Dev/BOYA-skills" aria-label="BOYA Skills GitHub"><GitFork size={17} /></a>
+        </nav>
+        <a class="language-link" href={otherPath} lang={other === "zh-hant" ? "zh-Hant" : "zh-Hans"}>{localeLabels[other]}</a>
+        <details class="mobile-menu">
+          <summary aria-label={locale === "zh-hant" ? "開啟選單" : "打开菜单"}><Menu size={21} /></summary>
+          <nav class="mobile-panel" aria-label={locale === "zh-hant" ? "行動版導覽" : "移动版导航"}>
+            {nav.map(([label, href]) => <a href={href}>{label}</a>)}
+            <a href={otherPath}>{localeLabels[other]}</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="brand" href={localePath(locale)}><span class="brand-mark" aria-hidden="true">B</span><span>{t.common.brand}</span></a>
+            <p class="muted" style="margin-top:16px">{t.footer.note}</p>
+          </div>
+          <nav class="footer-links" aria-label={locale === "zh-hant" ? "頁尾導覽" : "页尾导航"}>
+            <a href={localePath(locale, "privacy")}>{t.footer.privacy}</a>
+            <a href={localePath(locale, "terms")}>{t.footer.terms}</a>
+            <a href="https://github.com/DylanChiang-Dev/BOYA-skills">GitHub</a>
+          </nav>
+        </div>
+        <div class="copyright">© 2026 Dylan Chiang. Website code MIT licensed. BOYA brand reserved.</div>
+      </div>
+    </footer>
+  </body>
+</html>

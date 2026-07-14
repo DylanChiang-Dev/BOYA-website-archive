@@ -1,0 +1,111 @@
+---
+import { ArrowRight, Check, Download, GitFork } from "@lucide/astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { localePath, messages, staticLocalePaths, type Locale } from "../../data/i18n";
+import { macAsset } from "../../data/release";
+
+export function getStaticPaths() { return staticLocalePaths(); }
+const { locale } = Astro.props as { locale: Locale };
+const t = messages[locale];
+const zh = locale === "zh-hant";
+const copy = zh ? {
+  description: "BOYA 博雅把免費、開源的 AI 研究 Skills 與本地優先的 Desktop 工作台連在一起，陪人文社科研究者從讀文獻走到寫論文。",
+  heroBody: "十五個開源 Skills 管研究流程，Desktop 管文件、Notebook、執行紀錄與證據。每一個只有你能決定的關卡，都會停下來等你拍板。",
+  heroNote: "Skills 永久免費 · Desktop Preview 免費",
+  methodEyebrow: "不是全自動論文機",
+  methodTitle: "把判斷留給研究者",
+  methodBody: "BOYA 自動處理檢索、整理、格式與檢查等可委派工作，但不替你選研究問題、理論、方法、解釋或最終主張。",
+  principles: [
+    ["人類在環", "研究關卡明確硬停，不把學術判斷藏進自動流程。"],
+    ["證據可追", "引用、事實和產出回到來源；缺失就標待補。"],
+    ["本地工作", "文件與研究產物留在你的工作區，操作留下可檢查紀錄。"],
+  ],
+  desktopEyebrow: "BOYA Desktop",
+  desktopTitle: "研究材料、對話與產出，放在同一個工作台",
+  desktopBody: "打開本地資料夾，直接和 BOYA 一起閱讀、分析、寫作；文件預覽、Notebook、執行紀錄與證據鏈不必散落在不同工具。",
+  features: ["本地研究工作區與文件預覽", "十五個 BOYA Skills 內建接力", "Notebook、程式與產出留痕", "macOS Apple Silicon Preview"],
+  skillsEyebrow: "BOYA Skills",
+  skillsTitle: "免費倉庫是整個產品的規則來源",
+  skillsBody: "從研究問題、文獻搜尋、理論框架到投稿對標，十五個技能各守一段。內容先在公開倉庫修正，再同步到 Desktop 與網站。",
+  supportEyebrow: "需要作者直接協助？",
+  supportTitle: "¥199／年的答疑群，買的是持續服務",
+  supportBody: "Skills 不收費。作者答疑群提供安裝與使用答疑、版本更新導讀和案例交流。",
+} : {
+  description: "BOYA 博雅把免费、开源的 AI 研究 Skills 与本地优先的 Desktop 工作台连在一起，陪人文社科研究者从读文献走到写论文。",
+  heroBody: "十五个开源 Skills 管研究流程，Desktop 管文件、Notebook、执行记录与证据。每一个只有你能决定的关卡，都会停下来等你拍板。",
+  heroNote: "Skills 永久免费 · Desktop Preview 免费",
+  methodEyebrow: "不是全自动论文机",
+  methodTitle: "把判断留给研究者",
+  methodBody: "BOYA 自动处理检索、整理、格式与检查等可委派工作，但不替你选研究问题、理论、方法、解释或最终主张。",
+  principles: [
+    ["人类在环", "研究关卡明确硬停，不把学术判断藏进自动流程。"],
+    ["证据可追", "引用、事实和产出回到来源；缺失就标待补。"],
+    ["本地工作", "文件与研究产物留在你的工作区，操作留下可检查记录。"],
+  ],
+  desktopEyebrow: "BOYA Desktop",
+  desktopTitle: "研究材料、对话与产出，放在同一个工作台",
+  desktopBody: "打开本地文件夹，直接和 BOYA 一起阅读、分析、写作；文件预览、Notebook、执行记录与证据链不必散落在不同工具。",
+  features: ["本地研究工作区与文件预览", "十五个 BOYA Skills 内置接力", "Notebook、程序与产出留痕", "macOS Apple Silicon Preview"],
+  skillsEyebrow: "BOYA Skills",
+  skillsTitle: "免费仓库是整个产品的规则来源",
+  skillsBody: "从研究问题、文献搜索、理论框架到投稿对标，十五个技能各守一段。内容先在公开仓库修正，再同步到 Desktop 与网站。",
+  supportEyebrow: "需要作者直接协助？",
+  supportTitle: "¥199／年的答疑群，买的是持续服务",
+  supportBody: "Skills 不收费。作者答疑群提供安装与使用答疑、版本更新导读和案例交流。",
+};
+---
+<BaseLayout locale={locale} title={`${t.common.brand}｜${t.common.tagline}`} description={copy.description}>
+  <section class="home-hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">{t.common.tagline}</p>
+        <h1>{t.common.brand}</h1>
+        <p class="lede">{copy.heroBody}</p>
+        <div class="button-row">
+          <a class="button" href={macAsset?.url || `${localePath(locale, "desktop")}#download`}><Download size={18} />{t.action.download}</a>
+          <a class="button secondary" href={localePath(locale, "skills")}><GitFork size={18} />{t.action.skills}</a>
+        </div>
+        <div class="hero-note"><span aria-hidden="true"></span>{copy.heroNote}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band white">
+    <div class="container">
+      <div class="section-heading">
+        <div><p class="eyebrow">{copy.methodEyebrow}</p><h2>{copy.methodTitle}</h2></div>
+        <p class="lede">{copy.methodBody}</p>
+      </div>
+      <div class="principles">
+        {copy.principles.map(([title, body], index) => <article class="principle"><span class="principle-number">0{index + 1}</span><h3>{title}</h3><p class="muted">{body}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container product-band">
+      <div class="product-shot"><img src="/images/desktop-workflow.png" width="1368" height="1000" alt={zh ? "BOYA Desktop 研究工作流介面" : "BOYA Desktop 研究工作流界面"} loading="lazy" /></div>
+      <div>
+        <p class="eyebrow">{copy.desktopEyebrow}</p>
+        <h2>{copy.desktopTitle}</h2>
+        <p class="muted">{copy.desktopBody}</p>
+        <ul class="feature-list">{copy.features.map((item) => <li><Check size={17} /><span>{item}</span></li>)}</ul>
+        <a class="button" href={localePath(locale, "desktop")}>{t.common.learnMore}<ArrowRight size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band white">
+    <div class="container section-heading">
+      <div><p class="eyebrow">{copy.skillsEyebrow}</p><h2>{copy.skillsTitle}</h2></div>
+      <div><p class="lede">{copy.skillsBody}</p><div class="button-row"><a class="button secondary" href={localePath(locale, "skills")}>{t.action.skills}<ArrowRight size={18} /></a><a class="button ghost" href="https://github.com/DylanChiang-Dev/BOYA-skills">GitHub <GitFork size={17} /></a></div></div>
+    </div>
+  </section>
+
+  <section class="band dark">
+    <div class="container section-heading">
+      <div><p class="eyebrow">{copy.supportEyebrow}</p><h2>{copy.supportTitle}</h2></div>
+      <div><p class="lede">{copy.supportBody}</p><a class="button" href={localePath(locale, "community")}>{t.action.contact}<ArrowRight size={18} /></a></div>
+    </div>
+  </section>
+</BaseLayout>

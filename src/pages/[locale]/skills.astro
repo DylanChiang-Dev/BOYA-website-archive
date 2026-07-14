@@ -1,0 +1,48 @@
+---
+import { GitFork } from "@lucide/astro";
+import PageHero from "../../components/PageHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { localePath, messages, staticLocalePaths, type Locale } from "../../data/i18n";
+import { skills } from "../../data/skills";
+
+export function getStaticPaths() { return staticLocalePaths(); }
+const { locale } = Astro.props as { locale: Locale };
+const t = messages[locale];
+const zh = locale === "zh-hant";
+const copy = zh ? {
+  title: "十五個 Skills，走完一條研究工作流",
+  description: "BOYA Skills 是公開、免費、可檢查的研究規則庫。從題目到投稿，每一棒只處理自己負責的問題。",
+  workflow: "工作流全覽",
+  sourceTitle: "倉庫是唯一真實來源",
+  sourceBody: "網站與 Desktop 都是下游。發現流程問題時先修 BOYA-skills，再讓其他產品跟進；不會用付費內容覆蓋公開規則。",
+  installTitle: "三種安裝方式",
+  installBody: "最簡單的方法是把下面這段話交給目前使用的 Agent，讓它先說明寫入路徑並等你確認。",
+  prompt: "幫我從 https://github.com/DylanChiang-Dev/BOYA-skills 安裝全部 15 個 BOYA skills。請先判斷目前的 agent 環境與可用的 skills 目錄，說明會寫入哪些路徑，等我確認後再執行。",
+} : {
+  title: "十五个 Skills，走完一条研究工作流",
+  description: "BOYA Skills 是公开、免费、可检查的研究规则库。从题目到投稿，每一棒只处理自己负责的问题。",
+  workflow: "工作流全览",
+  sourceTitle: "仓库是唯一真实来源",
+  sourceBody: "网站与 Desktop 都是下游。发现流程问题时先修 BOYA-skills，再让其他产品跟进；不会用付费内容覆盖公开规则。",
+  installTitle: "三种安装方式",
+  installBody: "最简单的方法是把下面这段话交给目前使用的 Agent，让它先说明写入路径并等你确认。",
+  prompt: "帮我从 https://github.com/DylanChiang-Dev/BOYA-skills 安装全部 15 个 BOYA skills。请先判断目前的 agent 环境与可用的 skills 目录，说明会写入哪些路径，等我确认后再执行。",
+};
+---
+<BaseLayout locale={locale} title={`${copy.title}｜${t.common.brand}`} description={copy.description}>
+  <PageHero eyebrow="BOYA Skills · MIT" title={copy.title} description={copy.description} />
+  <section class="band white">
+    <div class="container">
+      <div class="section-heading"><h2>{copy.workflow}</h2><p class="lede">{t.common.principle}</p></div>
+      <div class="skill-list">
+        {skills.map((skill) => <article class="skill-row"><span class="skill-stage">{String(skill.stage).padStart(2, "0")}</span><h3>{skill.title[locale]}</h3><p class="muted">{skill.description[locale]}</p><span class="skill-id">{skill.id}</span></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="container product-band">
+      <div><p class="eyebrow">{t.common.source}</p><h2>{copy.sourceTitle}</h2><p class="lede">{copy.sourceBody}</p><a class="button" href="https://github.com/DylanChiang-Dev/BOYA-skills"><GitFork size={18} />{t.action.github}</a></div>
+      <div><p class="eyebrow">Codex · Claude Code · OpenCode</p><h2>{copy.installTitle}</h2><p>{copy.installBody}</p><div class="code-block">{copy.prompt}</div><a href={localePath(locale, "docs/skills")}>{zh ? "查看完整安裝指南" : "查看完整安装指南"} →</a></div>
+    </div>
+  </section>
+</BaseLayout>

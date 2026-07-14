@@ -1,0 +1,42 @@
+---
+import { X } from "@lucide/astro";
+import type { Locale } from "../data/i18n";
+interface Props { locale: Locale; triggerLabel: string; }
+const { locale, triggerLabel } = Astro.props;
+const copy = locale === "zh-hant" ? {
+  title: "加入 BOYA 作者答疑群",
+  body: "使用微信掃描作者個人碼，或搜尋「蔣濤AI」。添加時請備註「BOYA」，確認服務範圍並付款後，作者會人工邀請入群。",
+  price: "¥199／年",
+  refund: "付款後、尚未入群且未開始答疑前可全額退款。入群或服務開始後不退款。",
+  close: "關閉",
+  alt: "作者蔣濤的個人微信 QR Code",
+} : {
+  title: "加入 BOYA 作者答疑群",
+  body: "使用微信扫描作者个人码，或搜索“蒋涛AI”。添加时请备注“BOYA”，确认服务范围并付款后，作者会人工邀请入群。",
+  price: "¥199／年",
+  refund: "付款后、尚未入群且未开始答疑前可全额退款。入群或服务开始后不退款。",
+  close: "关闭",
+  alt: "作者蒋涛的个人微信二维码",
+};
+---
+<button class="button" type="button" data-dialog-open>{triggerLabel}</button>
+<dialog data-wechat-dialog aria-labelledby="wechat-title">
+  <div class="dialog-inner">
+    <button class="dialog-close" type="button" data-dialog-close aria-label={copy.close}><X size={20} /></button>
+    <img class="wechat-image" src="/images/wechat-contact.png" width="520" height="520" alt={copy.alt} />
+    <div>
+      <p class="eyebrow">{copy.price}</p>
+      <h2 id="wechat-title">{copy.title}</h2>
+      <p>{copy.body}</p>
+      <p class="notice">{copy.refund}</p>
+    </div>
+  </div>
+</dialog>
+<script>
+  const openers = document.querySelectorAll<HTMLButtonElement>("[data-dialog-open]");
+  const dialog = document.querySelector<HTMLDialogElement>("[data-wechat-dialog]");
+  const close = dialog?.querySelector<HTMLButtonElement>("[data-dialog-close]");
+  openers.forEach((opener) => opener.addEventListener("click", () => dialog?.showModal()));
+  close?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+</script>

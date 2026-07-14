@@ -1,0 +1,54 @@
+---
+import { Check, X } from "@lucide/astro";
+import PageHero from "../../components/PageHero.astro";
+import WechatDialog from "../../components/WechatDialog.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { messages, staticLocalePaths, type Locale } from "../../data/i18n";
+
+export function getStaticPaths() { return staticLocalePaths(); }
+const { locale } = Astro.props as { locale: Locale };
+const t = messages[locale];
+const zh = locale === "zh-hant";
+const copy = zh ? {
+  title: "Skills 免費；作者的持續支援按年收費",
+  description: "¥199／年加入 BOYA 作者答疑群。先確認服務邊界，再透過微信人工付款與入群。",
+  includes: ["BOYA Skills 與 Desktop 的安裝、設定和使用答疑", "版本更新導讀與重要變更提醒", "真實使用案例交流與常見問題整理"],
+  excludes: ["論文代寫、代做研究或替你作學術判斷", "固定回覆時限、全天候一對一服務", "畢業、投稿、審稿或錄用結果保證"],
+  scope: "你購買的是 12 個月的群內支援，不是 Skills 的使用權。公開 Skills 仍然依 MIT 免費提供。",
+  refund: "付款後、尚未入群且未開始答疑前可全額退款；一旦入群或服務開始，即視為數位服務已交付，不再退款。",
+  freeTitle: "免費支援仍然存在",
+  freeBody: "Bug、可公開討論的問題與功能建議可繼續提交到 GitHub Issues；付費群提供的是作者直接答疑與持續服務。",
+} : {
+  title: "Skills 免费；作者的持续支持按年收费",
+  description: "¥199／年加入 BOYA 作者答疑群。先确认服务边界，再通过微信人工付款与入群。",
+  includes: ["BOYA Skills 与 Desktop 的安装、设置和使用答疑", "版本更新导读与重要变更提醒", "真实使用案例交流与常见问题整理"],
+  excludes: ["论文代写、代做研究或替你作学术判断", "固定回复时限、全天候一对一服务", "毕业、投稿、审稿或录用结果保证"],
+  scope: "你购买的是 12 个月的群内支持，不是 Skills 的使用权。公开 Skills 仍然依据 MIT 免费提供。",
+  refund: "付款后、尚未入群且未开始答疑前可全额退款；一旦入群或服务开始，即视为数字服务已交付，不再退款。",
+  freeTitle: "免费支持仍然存在",
+  freeBody: "Bug、可公开讨论的问题与功能建议可以继续提交到 GitHub Issues；付费群提供的是作者直接答疑与持续服务。",
+};
+---
+<BaseLayout locale={locale} title={`${copy.title}｜${t.common.brand}`} description={copy.description}>
+  <PageHero eyebrow="Author support · CNY 199/year" title={copy.title} description={copy.description} />
+  <section class="band white">
+    <div class="container community-grid">
+      <div>
+        <p class="eyebrow">BOYA {zh ? "作者答疑群" : "作者答疑群"}</p>
+        <div class="price">¥199 <small>／12 {zh ? "個月" : "个月"}</small></div>
+        <p>{copy.scope}</p>
+        <WechatDialog locale={locale} triggerLabel={t.action.contact} />
+      </div>
+      <div class="scope-columns">
+        <div><h3>{zh ? "包含" : "包含"}</h3><ul>{copy.includes.map((item) => <li><Check size={16} style="display:inline;vertical-align:-3px;color:var(--green);margin-right:7px" />{item}</li>)}</ul></div>
+        <div><h3>{zh ? "不包含" : "不包含"}</h3><ul>{copy.excludes.map((item) => <li><X size={16} style="display:inline;vertical-align:-3px;color:var(--accent);margin-right:7px" />{item}</li>)}</ul></div>
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="container section-heading"><div><p class="eyebrow">Refund</p><h2>{zh ? "退款與交付" : "退款与交付"}</h2></div><p class="lede">{copy.refund}</p></div>
+  </section>
+  <section class="band white">
+    <div class="container section-heading"><div><p class="eyebrow">Open source</p><h2>{copy.freeTitle}</h2></div><div><p class="lede">{copy.freeBody}</p><a class="button secondary" href="https://github.com/DylanChiang-Dev/BOYA-skills/issues">GitHub Issues</a></div></div>
+  </section>
+</BaseLayout>
