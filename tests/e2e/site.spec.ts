@@ -24,12 +24,14 @@ test("language switch preserves the current page", async ({ page }) => {
   if (!(await languageLink.isVisible())) await page.locator(".mobile-menu summary").click();
   await languageLink.click();
   await expect(page).toHaveURL(/\/zh-hans\/skills\/$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("十五个 Skills");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("十七个 Skills");
 });
 
 test("skills page lists the canonical catalogue and installation prompt", async ({ page }) => {
   await page.goto("/zh-hant/skills/");
-  await expect(page.locator(".skill-row")).toHaveCount(15);
+  await expect(page.locator(".skill-row")).toHaveCount(17);
+  await expect(page.getByText("claim-audit", { exact: true })).toBeVisible();
+  await expect(page.getByText("research-record", { exact: true })).toBeVisible();
   await expect(page.getByText("DylanChiang-Dev/BOYA-skills", { exact: false })).toBeVisible();
 });
 
