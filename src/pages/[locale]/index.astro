@@ -1,95 +1,148 @@
 ---
-import { ArrowRight, Check, Download, GitFork } from "@lucide/astro";
+import { ArrowRight, Check, GitFork } from "@lucide/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { localePath, messages, staticLocalePaths, type Locale } from "../../data/i18n";
-import { macAsset } from "../../data/release";
+import { boyaVersion, skills, type SkillSummary } from "../../data/skills";
 
 export function getStaticPaths() { return staticLocalePaths(); }
 const { locale } = Astro.props as { locale: Locale };
 const t = messages[locale];
 const zh = locale === "zh-hant";
 const copy = zh ? {
-  description: "BOYA 博雅由兩個清楚分工的開源產品組成：免費 Skills 提供研究規則，BOYA Desktop 0.2 提供 macOS 本地 AI 工作台。",
-  heroBody: "Skills 負責研究方法與寫作規則；Desktop 0.2 負責在你選定的本地資料夾裡與 Pi 對話、操作檔案和管理工作階段。研究判斷始終由你做。",
-  heroNote: "Skills 永久免費 · Desktop 0.2 Preview",
+  heroTitle: "從模糊題目，到可以交出去",
+  description: "BOYA 博雅把人文社科論文的研究流程拆成 17 個 Skills：從磨題、找文獻、建立框架到自我審查、口試與投稿。",
+  heroBody: "BOYA 把論文研究中沒人一次講清楚的步驟，拆成 17 個可呼叫的 Skills。AI 做苦工；研究問題、方法選擇與詮釋，始終由你決定。",
+  heroNote: "17 個 Skills · MIT 免費 · 人類在環",
+  heroFactsLabel: "你可能卡在這裡",
   heroFacts: [
-    ["本地工作區", "只在你選定的資料夾內讀寫。"],
-    ["Pi 對話", "串流 Markdown、工具進度與可中止的工作階段。"],
-    ["一次性核准", "Shell 指令與既有檔案覆寫都先等你確認。"],
+    ["題目太大", "research-question 把模糊興趣磨成可研究問題。"],
+    ["文獻太亂", "literature-search、reference-check、literature-analysis 先找、再核、再讀。"],
+    ["初稿要交", "academic-revision、manuscript-review、claim-audit 拆開修稿與證據檢查。"],
   ],
+  workflowEyebrow: `BOYA Skills · ${boyaVersion}`,
+  workflowTitle: "把論文拆成十七個可檢查的步驟",
+  workflowBody: "從一個念頭開始，先叫 boya；它會依你的材料與進度定位下一棒。每個只有你能決定的關卡，都會停下來等你拍板。",
+  workflowAction: "查看研究工作流",
+  workflowCta: "查看完整 Skills",
+  optional: "選用",
+  methodEyebrow: "Boya 的工作方式",
+  methodTitle: "AI 做苦工，研究者做判斷",
+  methodBody: "Skills 處理檢索、查核、格式與模擬提問；研究問題、方法選擇與詮釋，永遠留在你手上。",
+  principles: [
+    ["判斷自留", "不替你選研究問題、理論、方法、解釋或最終主張。"],
+    ["凡引用必回源", "reference-check 核對書目存在；承重主張再由 claim-audit 回到原文。"],
+    ["透明而非遮掩", "流程保留決策與未知項，也誠實面對 AI 協作。"],
+  ],
+  desktopEyebrow: "BOYA Desktop · 可選用的本地工具",
+  desktopTitle: "需要本地工作區時，再使用 Desktop",
+  desktopBody: "BOYA Desktop 0.2 是 macOS Apple Silicon 的本地工作台，負責選定工作資料夾、檔案操作與工作階段。它不載入 Skills；研究規則仍從公開 BOYA-skills 倉庫安裝。",
   desktopScope: [
     ["平台", "macOS 13+ · Apple Silicon"],
-    ["核心", "本地工作區與可切換的 Pi 對話"],
-    ["權限", "每次操作清楚核准"],
+    ["用途", "本地工作區與檔案操作"],
+    ["邊界", "不載入 Skills"],
   ],
-  methodEyebrow: "不是全自動論文機",
-  methodTitle: "把判斷留給研究者",
-  methodBody: "BOYA 不替你選研究問題、來源、理論、方法、解釋或最終主張。Skills 是公開規則庫；Desktop 只提供受控的本地工作空間與 Pi 對話。",
-  principles: [
-    ["人類在環", "研究判斷明確留在你手上，不把學術決策藏進自動流程。"],
-    ["本地優先", "Desktop 只在目前工作區操作，對話工作階段留在本機。"],
-    ["邊界清楚", "Desktop 0.2 不載入 Skills、MCP、Notebook 或遠端運算。"],
-  ],
-  desktopEyebrow: "BOYA Desktop",
-  desktopTitle: "一個精簡、本地優先的工作台",
-  desktopBody: "BOYA Desktop 0.2 是 macOS Apple Silicon 的 Pi 用戶端：選定工作資料夾、開啟對話、查看串流回應與工具進度，必要時逐次核准操作。",
-  features: ["macOS 13+ · Apple Silicon", "本地工作區與可切換的 Pi 對話", "串流 Markdown、工具進度與可中止操作", "既有檔案覆寫與 Shell 指令逐次核准"],
-  skillsEyebrow: "BOYA Skills",
-  skillsTitle: "規則庫與 Desktop，各自負責",
-  skillsBody: "BOYA Skills 是公開倉庫的唯一真實來源，可以單獨安裝在支援的 Agent。Desktop 0.2 不載入 Skills；網站只同步公開倉庫的內容。",
+  features: ["macOS 13+ · Apple Silicon", "選定一個可備份的本地研究資料夾", "Shell 指令與既有檔案覆寫逐次核准", "模型與 API 金鑰可稍後在 Settings 設定"],
   supportEyebrow: "需要作者直接協助？",
   supportTitle: "¥199／年的答疑群，買的是持續服務",
   supportBody: "Skills 不收費。作者答疑群提供安裝與使用答疑、版本更新導讀和案例交流。",
 } : {
-  description: "BOYA 博雅由两个清楚分工的开源产品组成：免费 Skills 提供研究规则，BOYA Desktop 0.2 提供 macOS 本地 AI 工作台。",
-  heroBody: "Skills 负责研究方法与写作规则；Desktop 0.2 负责在你选定的本地文件夹里与 Pi 对话、操作文件和管理工作阶段。研究判断始终由你做。",
-  heroNote: "Skills 永久免费 · Desktop 0.2 Preview",
+  heroTitle: "从模糊题目，到可以交出去",
+  description: "BOYA 博雅把人文社科论文的研究流程拆成 17 个 Skills：从磨题、找文献、建立框架到自我审查、答辩与投稿。",
+  heroBody: "BOYA 把论文研究中没人一次讲清楚的步骤，拆成 17 个可调用的 Skills。AI 做苦工；研究问题、方法选择与解释，始终由你决定。",
+  heroNote: "17 个 Skills · MIT 免费 · 人类在环",
+  heroFactsLabel: "你可能卡在哪里",
   heroFacts: [
-    ["本地工作区", "只在你选定的文件夹内读写。"],
-    ["Pi 对话", "串流 Markdown、工具进度与可中止的工作阶段。"],
-    ["一次性核准", "Shell 命令与已有文件覆盖都先等你确认。"],
+    ["题目太大", "research-question 把模糊兴趣磨成可研究问题。"],
+    ["文献太乱", "literature-search、reference-check、literature-analysis 先找、再核、再读。"],
+    ["初稿要交", "academic-revision、manuscript-review、claim-audit 拆开修稿与证据检查。"],
   ],
+  workflowEyebrow: `BOYA Skills · ${boyaVersion}`,
+  workflowTitle: "把论文拆成十七个可检查的步骤",
+  workflowBody: "从一个念头开始，先叫 boya；它会根据你的材料与进度定位下一步。每个只有你能决定的关卡，都会停下来等你决定。",
+  workflowAction: "查看研究工作流",
+  workflowCta: "查看完整 Skills",
+  optional: "选用",
+  methodEyebrow: "Boya 的工作方式",
+  methodTitle: "AI 做苦工，研究者做判断",
+  methodBody: "Skills 处理检索、查核、格式与模拟提问；研究问题、方法选择与解释，永远留在你手上。",
+  principles: [
+    ["判断自留", "不替你选研究问题、理论、方法、解释或最终主张。"],
+    ["凡引用必回源", "reference-check 核对书目存在；承重主张再由 claim-audit 回到原文。"],
+    ["透明而非遮掩", "流程保留决策与未知项，也诚实面对 AI 协作。"],
+  ],
+  desktopEyebrow: "BOYA Desktop · 可选用的本地工具",
+  desktopTitle: "需要本地工作区时，再使用 Desktop",
+  desktopBody: "BOYA Desktop 0.2 是 macOS Apple Silicon 的本地工作台，负责选择工作文件夹、文件操作与工作阶段。它不载入 Skills；研究规则仍从公开 BOYA-skills 仓库安装。",
   desktopScope: [
     ["平台", "macOS 13+ · Apple Silicon"],
-    ["核心", "本地工作区与可切换的 Pi 对话"],
-    ["权限", "每次操作清楚核准"],
+    ["用途", "本地工作区与文件操作"],
+    ["边界", "不载入 Skills"],
   ],
-  methodEyebrow: "不是全自动论文机",
-  methodTitle: "把判断留给研究者",
-  methodBody: "BOYA 不替你选研究问题、来源、理论、方法、解释或最终主张。Skills 是公开规则库；Desktop 只提供受控的本地工作空间与 Pi 对话。",
-  principles: [
-    ["人类在环", "研究判断明确留在你手上，不把学术决策藏进自动流程。"],
-    ["本地优先", "Desktop 只在当前工作区操作，对话工作阶段留在本机。"],
-    ["边界清楚", "Desktop 0.2 不载入 Skills、MCP、Notebook 或远程运算。"],
-  ],
-  desktopEyebrow: "BOYA Desktop",
-  desktopTitle: "一个精简、本地优先的工作台",
-  desktopBody: "BOYA Desktop 0.2 是 macOS Apple Silicon 的 Pi 客户端：选择工作文件夹、打开对话、查看串流回应与工具进度，必要时逐次核准操作。",
-  features: ["macOS 13+ · Apple Silicon", "本地工作区与可切换的 Pi 对话", "串流 Markdown、工具进度与可中止操作", "已有文件覆盖与 Shell 命令逐次核准"],
-  skillsEyebrow: "BOYA Skills",
-  skillsTitle: "规则库与 Desktop，各自负责",
-  skillsBody: "BOYA Skills 是公开仓库的唯一真实来源，可以单独安装在支持的 Agent。Desktop 0.2 不载入 Skills；网站只同步公开仓库的内容。",
+  features: ["macOS 13+ · Apple Silicon", "选择一个可备份的本地研究文件夹", "Shell 命令与已有文件覆盖逐次核准", "模型与 API 密钥可稍后在 Settings 设置"],
   supportEyebrow: "需要作者直接协助？",
   supportTitle: "¥199／年的答疑群，买的是持续服务",
   supportBody: "Skills 不收费。作者答疑群提供安装与使用答疑、版本更新导读和案例交流。",
 };
+
+type WorkflowStageCopy = { title: string; body: string; ids: string[] };
+const workflowStageCopy: WorkflowStageCopy[] = zh ? [
+  { title: "先定位研究要做什麼", body: "先從 boya 定位你現在的材料與進度；research-record 只有在你明確啟用時才保存檢查點。", ids: ["boya", "research-record"] },
+  { title: "把題目與文獻站穩", body: "把模糊興趣磨成研究問題，建立待核文獻清單，確認書目，再做精讀與矩陣。", ids: ["research-question", "literature-search", "reference-check", "literature-analysis"] },
+  { title: "決定框架與做法", body: "從文獻爭點比較候選理論，再把問題、材料、方法與推論邊界對齊。", ids: ["theoretical-framework", "research-design"] },
+  { title: "把論證寫成文章", body: "把論證順序搭成章節骨架，再依既有文字修訂，不讓修稿變成代寫。", ids: ["paper-outline", "academic-revision"] },
+  { title: "定稿前逐項檢查", body: "投稿前檢查主張、來源、格式、摘要與 AI 使用揭露；缺證據就標出來。", ids: ["manuscript-review", "claim-audit", "citation-format", "bilingual-abstract", "ai-use-disclosure"] },
+  { title: "面對口試，對準投稿", body: "從定稿準備口試與答詢，再拿真實作者須知核對投稿差距。", ids: ["thesis-defense-prep", "journal-fit"] },
+] : [
+  { title: "先定位研究要做什么", body: "先从 boya 定位你现在的材料与进度；research-record 只有在你明确启用时才保存检查点。", ids: ["boya", "research-record"] },
+  { title: "把题目与文献站稳", body: "把模糊兴趣磨成研究问题，建立待核文献清单，确认书目，再做精读与矩阵。", ids: ["research-question", "literature-search", "reference-check", "literature-analysis"] },
+  { title: "决定框架与做法", body: "从文献争点比较候选理论，再把问题、材料、方法与推论边界对齐。", ids: ["theoretical-framework", "research-design"] },
+  { title: "把论证写成文章", body: "把论证顺序搭成章节骨架，再依既有文字修订，不让修稿变成代写。", ids: ["paper-outline", "academic-revision"] },
+  { title: "定稿前逐项检查", body: "投稿前检查主张、来源、格式、摘要与 AI 使用披露；缺证据就标出来。", ids: ["manuscript-review", "claim-audit", "citation-format", "bilingual-abstract", "ai-use-disclosure"] },
+  { title: "面对答辩，对准投稿", body: "从定稿准备答辩与答询，再拿真实作者须知核对投稿差距。", ids: ["thesis-defense-prep", "journal-fit"] },
+];
+const skillById = new Map(skills.map((skill) => [skill.id, skill]));
+const workflowStages = workflowStageCopy.map((stage, index) => ({
+  ...stage,
+  number: String(index + 1).padStart(2, "0"),
+  skills: stage.ids.map((id) => skillById.get(id)).filter((skill): skill is SkillSummary => Boolean(skill)),
+}));
 ---
-<BaseLayout locale={locale} title={`${t.common.brand}｜${t.common.tagline}`} description={copy.description}>
+<BaseLayout locale={locale} title={`${t.common.brand}｜${copy.heroTitle}`} description={copy.description}>
   <section class="home-hero">
     <div class="container hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow">{t.common.tagline}</p>
-        <h1>{t.common.brand}</h1>
+        <p class="eyebrow">{t.common.brand} · {t.common.tagline}</p>
+        <h1>{copy.heroTitle}</h1>
         <p class="lede">{copy.heroBody}</p>
         <div class="button-row">
-          <a class="button" href={macAsset?.url || `${localePath(locale, "desktop")}#download`}><Download size={18} />{t.action.download}</a>
-          <a class="button secondary" href={localePath(locale, "skills")}><GitFork size={18} />{t.action.skills}</a>
+          <a class="button" href={localePath(locale, "skills")}><GitFork size={18} />{t.action.skills}</a>
+          <a class="button secondary" href="#workflow"><ArrowRight size={18} />{copy.workflowAction}</a>
         </div>
         <div class="hero-note"><span aria-hidden="true"></span>{copy.heroNote}</div>
       </div>
-      <div class="hero-facts" aria-label={copy.desktopEyebrow}>
-        <p class="eyebrow">BOYA Desktop 0.2</p>
+      <div class="hero-facts" aria-label={copy.heroFactsLabel}>
+        <p class="eyebrow">{copy.heroFactsLabel}</p>
         {copy.heroFacts.map(([title, body], index) => <div class="hero-fact"><span class="hero-fact-number">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow" class="band white">
+    <div class="container">
+      <div class="section-heading workflow-heading">
+        <div><p class="eyebrow">{copy.workflowEyebrow}</p><h2>{copy.workflowTitle}</h2></div>
+        <div><p class="lede">{copy.workflowBody}</p><a class="button ghost" href={localePath(locale, "skills")}>{copy.workflowCta}<ArrowRight size={18} /></a></div>
+      </div>
+      <div class="workflow-list">
+        {workflowStages.map((stage) => <article class="workflow-stage">
+          <div class="workflow-stage-intro"><span class="workflow-stage-number">{stage.number}</span><h3>{stage.title}</h3><p class="muted">{stage.body}</p></div>
+          <div class="workflow-skill-list">
+            {stage.skills.map((skill) => <div class="workflow-skill" id={`workflow-${skill.id}`}>
+              <div class="workflow-skill-heading"><strong>{skill.title[locale]}</strong><code>{skill.id}</code>{skill.id === "research-record" && <span class="workflow-optional">{copy.optional}</span>}</div>
+              <p class="muted">{skill.description[locale]}</p>
+            </div>)}
+          </div>
+        </article>)}
       </div>
     </div>
   </section>
@@ -119,13 +172,6 @@ const copy = zh ? {
         <ul class="feature-list">{copy.features.map((item) => <li><Check size={17} /><span>{item}</span></li>)}</ul>
         <a class="button" href={localePath(locale, "desktop")}>{t.common.learnMore}<ArrowRight size={18} /></a>
       </div>
-    </div>
-  </section>
-
-  <section class="band white">
-    <div class="container section-heading">
-      <div><p class="eyebrow">{copy.skillsEyebrow}</p><h2>{copy.skillsTitle}</h2></div>
-      <div><p class="lede">{copy.skillsBody}</p><div class="button-row"><a class="button secondary" href={localePath(locale, "skills")}>{t.action.skills}<ArrowRight size={18} /></a><a class="button ghost" href="https://github.com/DylanChiang-Dev/BOYA-skills">GitHub <GitFork size={17} /></a></div></div>
     </div>
   </section>
 

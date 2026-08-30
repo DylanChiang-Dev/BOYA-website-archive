@@ -2,17 +2,25 @@ import { expect, test } from "@playwright/test";
 
 test("traditional Chinese home exposes both product paths", async ({ page }) => {
   await page.goto("/zh-hant/");
-  await expect(page.getByRole("heading", { level: 1, name: "BOYA 博雅" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "查看 Desktop Preview" })).toHaveAttribute("href", /desktop\/\#download$/);
-  await expect(page.getByRole("link", { name: "查看免費 Skills" }).first()).toHaveAttribute("href", "/zh-hant/skills/");
-  await expect(page.getByText("把判斷留給研究者")).toBeVisible();
-  await expect(page.getByText("Desktop 0.2 不載入 Skills、MCP、Notebook 或遠端運算。")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "從模糊題目，到可以交出去" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "查看免費 Skills" })).toHaveAttribute("href", "/zh-hant/skills/");
+  await expect(page.getByRole("link", { name: "查看研究工作流" })).toHaveAttribute("href", "#workflow");
+  await expect(page.getByText("把論文拆成十七個可檢查的步驟")).toBeVisible();
 });
 
 test("homepage does not present retired Desktop features as current", async ({ page }) => {
   await page.goto("/zh-hant/");
   await expect(page.getByText("Notebook", { exact: true })).toHaveCount(0);
   await expect(page.locator("[data-demo-image]")).toHaveCount(0);
+});
+
+test("homepage maps every skill to a research stage", async ({ page }) => {
+  await page.goto("/zh-hant/");
+  await expect(page.locator(".workflow-stage")).toHaveCount(6);
+  await expect(page.locator(".workflow-skill")).toHaveCount(17);
+  await expect(page.getByText("research-question", { exact: true })).toBeVisible();
+  await expect(page.getByText("claim-audit", { exact: true })).toBeVisible();
+  await expect(page.getByText("journal-fit", { exact: true })).toBeVisible();
 });
 
 test("language switch preserves the current page", async ({ page }) => {

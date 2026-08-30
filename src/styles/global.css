@@ -149,6 +149,22 @@ p { margin: 0 0 18px; }
 .principle:last-child { border-right: 0; }
 .principle-number { display: inline-block; margin-bottom: 42px; color: var(--accent); font-family: ui-monospace, monospace; font-size: 13px; }
 
+.workflow-heading { margin-bottom: 58px; }
+.workflow-heading .button { margin-top: 8px; }
+.workflow-list { border-top: 1px solid var(--line); }
+.workflow-stage { display: grid; grid-template-columns: minmax(240px, .72fr) minmax(0, 1.28fr); gap: 64px; padding: 34px 0; border-bottom: 1px solid var(--line); }
+.workflow-stage-intro h3 { margin: 12px 0 12px; font-size: 29px; }
+.workflow-stage-intro p { max-width: 360px; margin: 0; }
+.workflow-stage-number { color: var(--accent); font-family: ui-monospace, monospace; font-size: 13px; }
+.workflow-skill-list { border-top: 1px solid var(--line); }
+.workflow-skill { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.workflow-skill:last-child { border-bottom: 0; }
+.workflow-skill-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 5px; }
+.workflow-skill-heading strong { font-family: "Source Serif 4", Georgia, serif; font-size: 22px; line-height: 1.2; }
+.workflow-skill-heading code { color: var(--blue); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; overflow-wrap: anywhere; }
+.workflow-skill p { margin: 0; font-size: 14px; }
+.workflow-optional { color: var(--muted); font-size: 12px; }
+
 .product-band { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(320px, .75fr); gap: 64px; align-items: center; }
 .product-shot { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 22px 50px rgba(42, 39, 35, .12); background: #fff; }
 .product-scope { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -210,10 +226,11 @@ dialog::backdrop { background: rgba(20, 18, 15, .58); }
   .home-hero { min-height: 0; }
   .hero-inner { grid-template-columns: 1fr; gap: 60px; align-items: start; padding-block: 72px 84px; }
   .hero-copy { width: min(620px, 100%); }
-  .section-heading, .product-band, .community-grid { grid-template-columns: 1fr; gap: 34px; }
+  .section-heading, .product-band, .community-grid, .workflow-stage { grid-template-columns: 1fr; gap: 34px; }
   .principles { grid-template-columns: 1fr; }
   .principle, .principle + .principle { border-right: 0; border-bottom: 1px solid var(--line); padding: 24px 0; }
   .principle-number { margin-bottom: 16px; }
+  .workflow-stage { gap: 24px; }
   .guide-grid { grid-template-columns: 1fr; gap: 30px; }
   .guide-nav { position: static; display: flex; flex-wrap: wrap; gap: 6px 18px; }
   .skill-row { grid-template-columns: 44px minmax(0, 1fr); gap: 8px 16px; }
