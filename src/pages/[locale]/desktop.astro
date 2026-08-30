@@ -3,56 +3,80 @@ import { Check, Download, ExternalLink, ShieldCheck } from "@lucide/astro";
 import PageHero from "../../components/PageHero.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { messages, staticLocalePaths, type Locale } from "../../data/i18n";
-import { formatBytes, macArtifact, macAsset, releaseManifest } from "../../data/release";
+import { formatBytes, macAsset, releaseManifest } from "../../data/release";
 
 export function getStaticPaths() { return staticLocalePaths(); }
 const { locale } = Astro.props as { locale: Locale };
 const t = messages[locale];
 const zh = locale === "zh-hant";
 const copy = zh ? {
-  title: "把研究流程帶進你的本地工作區",
-  description: "BOYA Desktop 把檔案、對話、Notebook、執行紀錄與產出預覽放在一起，讓十七個 Skills 真正接上研究材料。",
+  title: "BOYA Desktop 0.2：精簡的本地 AI 工作台",
+  description: "BOYA Desktop 0.2 是 macOS Apple Silicon 的 Pi 用戶端：在一個選定的本地工作區管理對話、檔案操作與工作階段。",
+  scopeTitle: "0.2 的邊界",
+  scopeFacts: [
+    ["工作區", "只在你選定的本地資料夾內讀寫。"],
+    ["對話", "多個可切換的 Pi JSONL 工作階段。"],
+    ["安全", "API 金鑰放在 macOS Keychain；Shell 沒有網路或 Keychain 存取。"],
+  ],
+  scopeNote: "不包含 Skills、MCP、Notebook、Provenance、Runs、Artifacts 或遠端運算。",
   features: [
-    ["本地工作區", "直接打開研究資料夾，文件與產出仍由你管理。"],
-    ["文件與 Notebook", "預覽 PDF、DOCX、試算表、簡報和程式執行結果。"],
-    ["過程可追溯", "保留工具執行、產出與證據線索，方便回看與檢查。"],
+    ["本地工作區", "選定一個研究資料夾；Pi 只在目前工作區內讀寫。"],
+    ["Pi 對話", "支援串流 Markdown、工具進度、停止與多個工作階段。"],
+    ["逐次核准", "Shell 指令與既有檔案覆寫會停下來，等你單次確認。"],
   ],
   downloadTitle: "macOS Apple Silicon Preview",
   downloadBody: "免費預覽版，支援 macOS 13.0 以上的 Apple Silicon Mac。這是尚未簽名與公證的早期版本。",
+  pendingBody: "BOYA Desktop 0.2 Preview 的安裝包目前尚未公開。先查看功能邊界與安裝流程；安裝包公開後，這裡會同步顯示下載資訊。",
+  pendingTitle: "安裝包尚未公開",
   ready: "下載 BOYA Desktop",
-  pending: "R2 安裝包準備中",
-  pendingNote: "網站已完成下載介面；設定 Cloudflare R2 公開網址、檔案大小與 SHA-256 後，按鈕會自動開放。",
+  pending: "安裝包尚未公開",
+  pendingNote: "目前沒有可供下載的 0.2 安裝包。公開後，此頁會同步顯示下載連結、檔案大小與 SHA-256。",
   unsigned: "未簽名版本首次開啟時，請在 Finder 對 BOYA Desktop 按住 Control 點擊並選擇「打開」；不要停用 macOS 整體安全保護。",
   installTitle: "首次安裝",
-  installSteps: ["下載並打開 DMG。", "把 BOYA Desktop 拖進 Applications。", "首次啟動使用 Control 點擊「打開」。", "選擇本地研究工作資料夾，按畫面完成模型設定。"],
+  installSteps: ["下載並打開 DMG。", "把 BOYA Desktop 拖進 Applications。", "首次啟動使用 Control 點擊「打開」。", "選擇本地研究工作資料夾；模型與 API 金鑰可稍後在 Settings 設定。"],
   privacyTitle: "資料邊界寫清楚",
-  privacyBody: "工作區文件保留在本機。當你主動使用模型或網路工具時，選定內容可能依指令傳送到對應服務；BOYA 不會把整個工作區靜默上傳。",
+  privacyBody: "工作區檔案與本地工作階段保留在你的裝置。當你主動使用模型或網路工具時，選定內容可能依指令傳送到對應服務；BOYA 不會把整個工作區靜默上傳。",
 } : {
-  title: "把研究流程带进你的本地工作区",
-  description: "BOYA Desktop 把文件、对话、Notebook、执行记录与产出预览放在一起，让十七个 Skills 真正接上研究材料。",
+  title: "BOYA Desktop 0.2：精简的本地 AI 工作台",
+  description: "BOYA Desktop 0.2 是 macOS Apple Silicon 的 Pi 客户端：在一个选定的本地工作区管理对话、文件操作与工作阶段。",
+  scopeTitle: "0.2 的边界",
+  scopeFacts: [
+    ["工作区", "只在你选定的本地文件夹内读写。"],
+    ["对话", "多个可切换的 Pi JSONL 工作阶段。"],
+    ["安全", "API 密钥放在 macOS Keychain；Shell 没有网络或 Keychain 访问。"],
+  ],
+  scopeNote: "不包含 Skills、MCP、Notebook、Provenance、Runs、Artifacts 或远程运算。",
   features: [
-    ["本地工作区", "直接打开研究文件夹，文件与产出仍由你管理。"],
-    ["文件与 Notebook", "预览 PDF、DOCX、电子表格、演示文稿和程序执行结果。"],
-    ["过程可追溯", "保留工具执行、产出与证据线索，方便回看与检查。"],
+    ["本地工作区", "选择一个研究文件夹；Pi 只在当前工作区内读写。"],
+    ["Pi 对话", "支持串流 Markdown、工具进度、停止与多个工作阶段。"],
+    ["逐次核准", "Shell 命令与已有文件覆盖会停下，等你单次确认。"],
   ],
   downloadTitle: "macOS Apple Silicon Preview",
   downloadBody: "免费预览版，支持 macOS 13.0 以上的 Apple Silicon Mac。这是尚未签名与公证的早期版本。",
+  pendingBody: "BOYA Desktop 0.2 Preview 的安装包目前尚未公开。先查看功能边界与安装流程；安装包公开后，这里会同步显示下载信息。",
+  pendingTitle: "安装包尚未公开",
   ready: "下载 BOYA Desktop",
-  pending: "R2 安装包准备中",
-  pendingNote: "网站已完成下载接口；设置 Cloudflare R2 公开网址、文件大小与 SHA-256 后，按钮会自动开放。",
+  pending: "安装包尚未公开",
+  pendingNote: "目前没有可供下载的 0.2 安装包。公开后，此页会同步显示下载链接、文件大小与 SHA-256。",
   unsigned: "未签名版本首次打开时，请在 Finder 对 BOYA Desktop 按住 Control 点击并选择“打开”；不要停用 macOS 整体安全保护。",
   installTitle: "首次安装",
-  installSteps: ["下载并打开 DMG。", "把 BOYA Desktop 拖进 Applications。", "首次启动使用 Control 点击“打开”。", "选择本地研究工作文件夹，按页面完成模型设置。"],
+  installSteps: ["下载并打开 DMG。", "把 BOYA Desktop 拖进 Applications。", "首次启动使用 Control 点击“打开”。", "选择本地研究工作文件夹；模型与 API 密钥可稍后在 Settings 设置。"],
   privacyTitle: "把数据边界写清楚",
-  privacyBody: "工作区文件保留在本机。当你主动使用模型或网络工具时，选定内容可能按指令发送到对应服务；BOYA 不会把整个工作区静默上传。",
+  privacyBody: "工作区文件与本地工作阶段保留在你的设备。当你主动使用模型或网络工具时，选定内容可能按指令发送到对应服务；BOYA 不会把整个工作区静默上传。",
 };
-const assetSize = formatBytes(macArtifact.size, zh ? "zh-TW" : "zh-CN");
+const assetSize = macAsset ? formatBytes(macAsset.size, zh ? "zh-TW" : "zh-CN") : null;
+const downloadBody = macAsset ? copy.downloadBody : copy.pendingBody;
 ---
 <BaseLayout locale={locale} title={`BOYA Desktop｜${copy.title}`} description={copy.description}>
   <PageHero eyebrow="BOYA Desktop · Local first" title={copy.title} description={copy.description} />
   <section class="band white">
     <div class="container product-band">
-      <div class="product-shot"><img src="/images/desktop-figure.png" width="1600" height="1000" alt={zh ? "BOYA Desktop 圖表、程式碼與執行紀錄" : "BOYA Desktop 图表、程序代码与执行记录"} /></div>
+      <div class="product-scope">
+        <p class="eyebrow">BOYA Desktop 0.2</p>
+        <h3>{copy.scopeTitle}</h3>
+        {copy.scopeFacts.map(([label, value]) => <div class="product-scope-row"><span>{label}</span><strong>{value}</strong></div>)}
+        <p class="notice" style="margin-top:24px">{copy.scopeNote}</p>
+      </div>
       <div>{copy.features.map(([title, body]) => <article style="margin-bottom:28px"><h3>{title}</h3><p class="muted">{body}</p></article>)}</div>
     </div>
   </section>
@@ -60,16 +84,16 @@ const assetSize = formatBytes(macArtifact.size, zh ? "zh-TW" : "zh-CN");
     <div class="container">
       <p class="eyebrow">{t.common.free} · Preview {releaseManifest.version}</p>
       <h2>{copy.downloadTitle}</h2>
-      <p class="lede">{copy.downloadBody}</p>
+      <p class="lede">{downloadBody}</p>
       <div class="download-panel">
         <div>
-          <h3>{macArtifact.fileName}</h3>
-          <div class="download-meta"><span>{releaseManifest.minimumSystemVersion}+</span><span>Apple Silicon</span><span>{assetSize}</span><span class="hash">SHA-256: {macArtifact.sha256}</span></div>
+          <h3>{macAsset?.fileName ?? copy.pendingTitle}</h3>
+          <div class="download-meta"><span>{releaseManifest.minimumSystemVersion}+</span><span>Apple Silicon</span>{macAsset && <><span>{assetSize}</span><span class="hash">SHA-256: {macAsset.sha256}</span></>}</div>
         </div>
         {macAsset ? <a class="button" href={macAsset.url}><Download size={18} />{copy.ready}</a> : <button class="button" disabled><Download size={18} />{copy.pending}</button>}
       </div>
       {!macAsset && <p class="notice" style="margin-top:24px">{copy.pendingNote}</p>}
-      <p class="notice" style="margin-top:24px"><ShieldCheck size={18} style="display:inline;vertical-align:-3px;margin-right:7px" />{copy.unsigned}</p>
+      {macAsset && <p class="notice" style="margin-top:24px"><ShieldCheck size={18} style="display:inline;vertical-align:-3px;margin-right:7px" />{copy.unsigned}</p>}
     </div>
   </section>
   <section class="band white">

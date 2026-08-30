@@ -9,7 +9,7 @@ export const localeLabels: Record<Locale, string> = {
 export const messages = {
   "zh-hant": {
     nav: { home: "首頁", skills: "Skills", desktop: "Desktop", docs: "使用指南", community: "作者答疑群" },
-    action: { download: "免費下載 Preview", skills: "查看免費 Skills", github: "前往 GitHub", contact: "加入作者答疑群", close: "關閉" },
+    action: { download: "查看 Desktop Preview", skills: "查看免費 Skills", github: "前往 GitHub", contact: "加入作者答疑群", close: "關閉" },
     common: {
       brand: "BOYA 博雅",
       tagline: "給人文社科研究者的 AI 研究工作台",
@@ -23,7 +23,7 @@ export const messages = {
   },
   "zh-hans": {
     nav: { home: "首页", skills: "Skills", desktop: "Desktop", docs: "使用指南", community: "作者答疑群" },
-    action: { download: "免费下载 Preview", skills: "查看免费 Skills", github: "前往 GitHub", contact: "加入作者答疑群", close: "关闭" },
+    action: { download: "查看 Desktop Preview", skills: "查看免费 Skills", github: "前往 GitHub", contact: "加入作者答疑群", close: "关闭" },
     common: {
       brand: "BOYA 博雅",
       tagline: "给人文社科研究者的 AI 研究工作台",

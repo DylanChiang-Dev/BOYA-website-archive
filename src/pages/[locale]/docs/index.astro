@@ -9,10 +9,10 @@ const t = messages[locale];
 const zh = locale === "zh-hant";
 ---
 <BaseLayout locale={locale} title={`${t.nav.docs}｜${t.common.brand}`} description={zh ? "安裝 BOYA Skills 與 BOYA Desktop 的入門指南。" : "安装 BOYA Skills 与 BOYA Desktop 的入门指南。"}>
-  <PageHero eyebrow="Documentation" title={zh ? "從正確的入口開始" : "从正确的入口开始"} description={zh ? "只需要 Skills，可以直接安裝公開倉庫；想在本地文件與 Notebook 裡工作，再使用 Desktop。" : "只需要 Skills，可以直接安装公开仓库；想在本地文件与 Notebook 里工作，再使用 Desktop。"} />
+  <PageHero eyebrow="Documentation" title={zh ? "從正確的入口開始" : "从正确的入口开始"} description={zh ? "只需要 Skills，可以直接安裝公開倉庫；需要本地 Pi 工作區與對話，再使用 Desktop 0.2。" : "只需要 Skills，可以直接安装公开仓库；需要本地 Pi 工作区与对话，再使用 Desktop 0.2。"} />
   <section class="band white"><div class="container principles">
     <article class="principle"><span class="principle-number">01</span><h3>BOYA Skills</h3><p class="muted">{zh ? "適用 Codex、Claude Code 與 OpenCode。免費、開源、可單獨使用。" : "适用 Codex、Claude Code 与 OpenCode。免费、开源、可单独使用。"}</p><a href={localePath(locale, "docs/skills")}>{zh ? "安裝 Skills" : "安装 Skills"} <ArrowRight size={15} style="display:inline;vertical-align:-2px" /></a></article>
-    <article class="principle"><span class="principle-number">02</span><h3>BOYA Desktop</h3><p class="muted">{zh ? "macOS Apple Silicon 本地工作台，內建完整工作流。" : "macOS Apple Silicon 本地工作台，内置完整工作流。"}</p><a href={localePath(locale, "docs/desktop")}>{zh ? "安裝 Desktop" : "安装 Desktop"} <ArrowRight size={15} style="display:inline;vertical-align:-2px" /></a></article>
+    <article class="principle"><span class="principle-number">02</span><h3>BOYA Desktop</h3><p class="muted">{zh ? "macOS Apple Silicon 本地 Pi 工作台；0.2 不載入 Skills。" : "macOS Apple Silicon 本地 Pi 工作台；0.2 不载入 Skills。"}</p><a href={localePath(locale, "docs/desktop")}>{zh ? "安裝 Desktop" : "安装 Desktop"} <ArrowRight size={15} style="display:inline;vertical-align:-2px" /></a></article>
     <article class="principle"><span class="principle-number">03</span><h3>{zh ? "遇到問題" : "遇到问题"}</h3><p class="muted">{zh ? "公開問題走 GitHub Issues；需要作者直接支援可加入答疑群。" : "公开问题走 GitHub Issues；需要作者直接支持可加入答疑群。"}</p><a href={localePath(locale, "community")}>{t.nav.community} <ArrowRight size={15} style="display:inline;vertical-align:-2px" /></a></article>
   </div></section>
 </BaseLayout>

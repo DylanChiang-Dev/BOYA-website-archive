@@ -3,19 +3,16 @@ import { expect, test } from "@playwright/test";
 test("traditional Chinese home exposes both product paths", async ({ page }) => {
   await page.goto("/zh-hant/");
   await expect(page.getByRole("heading", { level: 1, name: "BOYA 博雅" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "免費下載 Preview" })).toHaveAttribute("href", /desktop\/\#download$/);
+  await expect(page.getByRole("link", { name: "查看 Desktop Preview" })).toHaveAttribute("href", /desktop\/\#download$/);
   await expect(page.getByRole("link", { name: "查看免費 Skills" }).first()).toHaveAttribute("href", "/zh-hant/skills/");
   await expect(page.getByText("把判斷留給研究者")).toBeVisible();
+  await expect(page.getByText("Desktop 0.2 不載入 Skills、MCP、Notebook 或遠端運算。")).toBeVisible();
 });
 
-test("hero demo switches between real product views", async ({ page }) => {
+test("homepage does not present retired Desktop features as current", async ({ page }) => {
   await page.goto("/zh-hant/");
-  const image = page.locator("[data-demo-image]");
-  await expect(image).toHaveAttribute("src", "/images/desktop-literature.png");
-  const figureButton = page.getByRole("button", { name: "圖表與程式" });
-  await figureButton.click();
-  await expect(figureButton).toHaveAttribute("aria-pressed", "true");
-  await expect(image).toHaveAttribute("src", "/images/desktop-figure.png");
+  await expect(page.getByText("Notebook", { exact: true })).toHaveCount(0);
+  await expect(page.locator("[data-demo-image]")).toHaveCount(0);
 });
 
 test("language switch preserves the current page", async ({ page }) => {
@@ -51,17 +48,19 @@ test("release manifest keeps the public updater contract", async ({ request }) =
   expect(response.ok()).toBeTruthy();
   const manifest = await response.json();
   expect(manifest).toMatchObject({
-    version: "0.1.0",
+    version: "0.2.0",
     channel: "preview",
     minimumSystemVersion: "macOS 13.0",
+    publishedAt: null,
   });
-  expect(Array.isArray(manifest.assets)).toBeTruthy();
+  expect(manifest.assets).toEqual([]);
 });
 
-test("preview honestly reports a missing R2 asset", async ({ page }) => {
+test("preview honestly reports an unpublished installer", async ({ page }) => {
   await page.goto("/zh-hant/desktop/#download");
-  await expect(page.getByRole("button", { name: "R2 安裝包準備中" })).toBeDisabled();
-  await expect(page.getByText(/SHA-256: 27aaa061/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "安裝包尚未公開" })).toBeDisabled();
+  await expect(page.getByText("目前沒有可供下載的 0.2 安裝包。")).toBeVisible();
+  await expect(page.locator(".download-panel")).not.toContainText("SHA-256");
 });
 
 test("mobile pages do not overflow horizontally", async ({ page }, testInfo) => {

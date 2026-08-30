@@ -10,13 +10,13 @@ interface Props {
   image?: string;
 }
 
-const { locale, title, description, image = "/images/desktop-literature.png" } = Astro.props;
+const { locale, title, description, image } = Astro.props;
 const t = messages[locale];
 const other = alternateLocale(locale);
 const path = Astro.url.pathname;
 const otherPath = path.replace(`/${locale}/`, `/${other}/`);
 const canonical = new URL(path, Astro.site);
-const imageUrl = new URL(image, Astro.site);
+const imageUrl = image ? new URL(image, Astro.site) : undefined;
 const nav = [
   [t.nav.home, localePath(locale)],
   [t.nav.skills, localePath(locale, "skills")],
@@ -51,7 +51,7 @@ const schema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={imageUrl} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
     <meta name="twitter:card" content="summary_large_image" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
     <title>{title}</title>

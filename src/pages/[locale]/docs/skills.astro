@@ -9,14 +9,14 @@ const zh = locale === "zh-hant";
 const prompt = zh ? "幫我從 https://github.com/DylanChiang-Dev/BOYA-skills 安裝全部 17 個 BOYA skills。請先判斷目前的 agent 環境與可用的 skills 目錄，說明會寫入哪些路徑，等我確認後再執行。" : "帮我从 https://github.com/DylanChiang-Dev/BOYA-skills 安装全部 17 个 BOYA skills。请先判断目前的 agent 环境与可用的 skills 目录，说明会写入哪些路径，等我确认后再执行。";
 ---
 <BaseLayout locale={locale} title={`${zh ? "安裝 BOYA Skills" : "安装 BOYA Skills"}｜${t.common.brand}`} description={zh ? "在 Codex、Claude Code 或 OpenCode 安裝全部 BOYA Skills。" : "在 Codex、Claude Code 或 OpenCode 安装全部 BOYA Skills。"}>
-  <PageHero eyebrow="Skills guide" title={zh ? "安裝全部十七個 Skills" : "安装全部十七个 Skills"} description={zh ? "BOYA Desktop 已內建；其他 Agent 請先判斷正確的 skills 目錄，再等你確認。" : "BOYA Desktop 已内置；其他 Agent 请先判断正确的 skills 目录，再等你确认。"} />
+  <PageHero eyebrow="Skills guide" title={zh ? "安裝全部十七個 Skills" : "安装全部十七个 Skills"} description={zh ? "BOYA Desktop 0.2 不載入 Skills；其他 Agent 請先判斷正確的 skills 目錄，再等你確認。" : "BOYA Desktop 0.2 不载入 Skills；其他 Agent 请先判断正确的 skills 目录，再等你确认。"} />
   <section class="band white"><div class="container guide-grid">
-    <nav class="guide-nav"><a href="#desktop">BOYA Desktop</a><a href="#agent">{zh ? "交給 Agent" : "交给 Agent"}</a><a href="#manual">{zh ? "手動安裝" : "手动安装"}</a><a href="#start">{zh ? "開始使用" : "开始使用"}</a></nav>
+    <nav class="guide-nav"><a href="#scope">BOYA Desktop</a><a href="#agent">{zh ? "交給 Agent" : "交给 Agent"}</a><a href="#manual">{zh ? "手動安裝" : "手动安装"}</a><a href="#start">{zh ? "開始使用" : "开始使用"}</a></nav>
     <article class="prose">
-      <h2 id="desktop">{zh ? "方法一：BOYA Desktop" : "方法一：BOYA Desktop"}</h2><p>{zh ? "第一方 Desktop 已內建十七個 skill。打開本地研究資料夾後直接從 boya 開始，不必另外複製。" : "第一方 Desktop 已内置十七个 skill。打开本地研究文件夹后直接从 boya 开始，不必另外复制。"}</p>
-      <h2 id="agent">{zh ? "方法二：交給 Agent" : "方法二：交给 Agent"}</h2><p>{zh ? "把下面完整指令送給目前使用的 Agent。確認它列出的寫入路徑無誤後，再批准安裝。" : "把下面完整指令发送给目前使用的 Agent。确认它列出的写入路径无误后，再批准安装。"}</p><div class="code-block">{prompt}</div>
-      <h2 id="manual">{zh ? "方法三：手動安裝" : "方法三：手动安装"}</h2><p>{zh ? "先 clone 公開倉庫，再把 skills 目錄複製到工具所使用的位置。" : "先 clone 公开仓库，再把 skills 目录复制到工具所使用的位置。"}</p><div class="code-block">git clone https://github.com/DylanChiang-Dev/BOYA-skills.git{`\n`}cp -r BOYA-skills/skills/* ~/.agents/skills/</div><p class="notice">{zh ? "不同工具的目錄不同。Codex 常用 $CODEX_HOME/skills，Claude Code 常用 ~/.claude/skills；不要在不確定時直接覆蓋既有目錄。" : "不同工具的目录不同。Codex 常用 $CODEX_HOME/skills，Claude Code 常用 ~/.claude/skills；不要在不确定时直接覆盖现有目录。"}</p>
-      <h2 id="start">{zh ? "從 boya 開始" : "从 boya 开始"}</h2><p>{zh ? "安裝完成後直接說「boya，帶我走」。它會先看現有材料與進度，再建議下一棒；遇到研究決策時必須停下來等你。" : "安装完成后直接说“boya，带我走”。它会先看现有材料与进度，再建议下一棒；遇到研究决策时必须停下来等你。"}</p>
+      <h2 id="scope">{zh ? "BOYA Desktop 0.2 的邊界" : "BOYA Desktop 0.2 的边界"}</h2><p>{zh ? "Desktop 0.2 不包含也不載入 Skills。它是獨立的本地 Pi 工作台；需要研究規則時，請在支援的 Agent 中安裝公開的 BOYA-skills 倉庫。" : "Desktop 0.2 不包含也不载入 Skills。它是独立的本地 Pi 工作台；需要研究规则时，请在支持的 Agent 中安装公开的 BOYA-skills 仓库。"}</p>
+      <h2 id="agent">{zh ? "交給 Agent" : "交给 Agent"}</h2><p>{zh ? "把下面完整指令送給目前使用的 Agent。確認它列出的寫入路徑無誤後，再批准安裝。" : "把下面完整指令发送给目前使用的 Agent。确认它列出的写入路径无误后，再批准安装。"}</p><div class="code-block">{prompt}</div>
+      <h2 id="manual">{zh ? "手動安裝" : "手动安装"}</h2><p>{zh ? "先 clone 公開倉庫，再把 skills 目錄複製到工具所使用的位置。" : "先 clone 公开仓库，再把 skills 目录复制到工具所使用的位置。"}</p><div class="code-block">git clone https://github.com/DylanChiang-Dev/BOYA-skills.git{`\n`}cp -r BOYA-skills/skills/* ~/.agents/skills/</div><p class="notice">{zh ? "不同工具的目錄不同。Codex 常用 $CODEX_HOME/skills，Claude Code 常用 ~/.claude/skills；不要在不確定時直接覆蓋既有目錄。" : "不同工具的目录不同。Codex 常用 $CODEX_HOME/skills，Claude Code 常用 ~/.claude/skills；不要在不确定时直接覆盖现有目录。"}</p>
+        <h2 id="start">{zh ? "開始使用" : "开始使用"}</h2><p>{zh ? "安裝完成後，在已載入 BOYA Skills 的 Agent 中說「boya，帶我走」。它會先看現有材料與進度，再建議下一棒；遇到研究決策時必須停下來等你。" : "安装完成后，在已载入 BOYA Skills 的 Agent 中说“boya，带我走”。它会先看现有材料与进度，再建议下一棒；遇到研究决策时必须停下来等你。"}</p>
     </article>
   </div></section>
 </BaseLayout>

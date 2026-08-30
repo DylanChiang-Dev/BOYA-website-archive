@@ -8,14 +8,14 @@ const t = messages[locale];
 const zh = locale === "zh-hant";
 ---
 <BaseLayout locale={locale} title={`${zh ? "安裝 BOYA Desktop" : "安装 BOYA Desktop"}｜${t.common.brand}`} description={zh ? "macOS Apple Silicon 預覽版的安裝與首次設定指南。" : "macOS Apple Silicon 预览版的安装与首次设置指南。"}>
-  <PageHero eyebrow="Desktop guide" title={zh ? "安裝與第一次啟動" : "安装与第一次启动"} description={zh ? "目前支援 macOS 13.0 以上、Apple Silicon。Preview 尚未簽名與公證。" : "目前支持 macOS 13.0 以上、Apple Silicon。Preview 尚未签名与公证。"} />
+  <PageHero eyebrow="Desktop guide" title={zh ? "安裝與第一次啟動" : "安装与第一次启动"} description={zh ? "BOYA Desktop 0.2 支援 macOS 13.0 以上、Apple Silicon。它是本地 Pi 工作台，Preview 尚未簽名與公證。" : "BOYA Desktop 0.2 支持 macOS 13.0 以上、Apple Silicon。它是本地 Pi 工作台，Preview 尚未签名与公证。"} />
   <section class="band white"><div class="container guide-grid">
     <nav class="guide-nav"><a href="#download">{zh ? "下載" : "下载"}</a><a href="#gatekeeper">Gatekeeper</a><a href="#workspace">{zh ? "工作區" : "工作区"}</a><a href="#model">{zh ? "模型設定" : "模型设置"}</a></nav>
     <article class="prose">
       <h2 id="download">1. {zh ? "下載安裝包" : "下载安装包"}</h2><p>{zh ? "前往 Desktop 頁核對版本、檔案大小和 SHA-256，再下載 DMG。" : "前往 Desktop 页面核对版本、文件大小和 SHA-256，再下载 DMG。"}</p><a class="button" href={`${localePath(locale, "desktop")}#download`}>{zh ? "前往下載" : "前往下载"}</a>
       <h2 id="gatekeeper">2. Gatekeeper</h2><p>{zh ? "把應用拖進 Applications。首次開啟時在 Finder 對 BOYA Desktop 按住 Control 點擊，選擇「打開」，並在系統提示中再次確認。" : "把应用拖进 Applications。首次打开时在 Finder 对 BOYA Desktop 按住 Control 点击，选择“打开”，并在系统提示中再次确认。"}</p><p class="notice">{zh ? "不要使用關閉 Gatekeeper 或停用系統安全保護的指令。" : "不要使用关闭 Gatekeeper 或停用系统安全保护的命令。"}</p>
-      <h2 id="workspace">3. {zh ? "選擇研究工作區" : "选择研究工作区"}</h2><p>{zh ? "選擇一個你能辨認、會備份的本地資料夾。BOYA 只在目前工作區內讀寫，不要把密鑰或私人設定放進研究資料夾。" : "选择一个你能识别、会备份的本地文件夹。BOYA 只在当前工作区内读写，不要把密钥或私人设置放进研究文件夹。"}</p>
-      <h2 id="model">4. {zh ? "設定模型" : "设置模型"}</h2><p>{zh ? "Preview 可使用開發者 BYOK 模式。金鑰存放在應用私人設定，不應出現在工作區、對話輸出或 Git。" : "Preview 可使用开发者 BYOK 模式。密钥存放在应用私有设置，不应出现在工作区、对话输出或 Git。"}</p>
+      <h2 id="workspace">3. {zh ? "選擇研究工作區" : "选择研究工作区"}</h2><p>{zh ? "選擇一個你能辨認、會備份的本地資料夾。BOYA 只在目前工作區內讀寫，不要把密鑰或私人設定放進研究資料夾。Desktop 0.2 不載入 Skills、MCP 或 Notebook。" : "选择一个你能识别、会备份的本地文件夹。BOYA 只在当前工作区内读写，不要把密钥或私有设置放进研究文件夹。Desktop 0.2 不载入 Skills、MCP 或 Notebook。"}</p>
+      <h2 id="model">4. {zh ? "設定模型" : "设置模型"}</h2><p>{zh ? "Preview 可使用開發者 BYOK 模式。金鑰存放在應用私人設定，不應出現在工作區、對話輸出或 Git。首次啟動只需要工作區；模型設定可稍後在 Settings 修改。" : "Preview 可使用开发者 BYOK 模式。密钥存放在应用私有设置，不应出现在工作区、对话输出或 Git。首次启动只需要工作区；模型设置可稍后在 Settings 修改。"}</p>
     </article>
   </div></section>
 </BaseLayout>

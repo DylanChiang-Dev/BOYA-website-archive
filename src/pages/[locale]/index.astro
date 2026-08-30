@@ -9,58 +9,66 @@ const { locale } = Astro.props as { locale: Locale };
 const t = messages[locale];
 const zh = locale === "zh-hant";
 const copy = zh ? {
-  description: "BOYA 博雅把免費、開源的 AI 研究 Skills 與本地優先的 Desktop 工作台連在一起，陪人文社科研究者從讀文獻走到寫論文。",
-  heroBody: "十七個開源 Skills 管研究流程，Desktop 管文件、Notebook、執行紀錄與證據。每一個只有你能決定的關卡，都會停下來等你拍板。",
-  heroNote: "Skills 永久免費 · Desktop Preview 免費",
-  demoLabel: "實際介面示範",
-  demos: [
-    ["文獻審查", "/images/desktop-literature.png", "BOYA Desktop 文獻檢索、引用審查與 PDF 產出示範"],
-    ["圖表與程式", "/images/desktop-figure.png", "BOYA Desktop 圖表、程式碼與執行紀錄示範"],
-    ["Notebook", "/images/desktop-notebook.png", "BOYA Desktop Notebook 與研究任務示範"],
+  description: "BOYA 博雅由兩個清楚分工的開源產品組成：免費 Skills 提供研究規則，BOYA Desktop 0.2 提供 macOS 本地 AI 工作台。",
+  heroBody: "Skills 負責研究方法與寫作規則；Desktop 0.2 負責在你選定的本地資料夾裡與 Pi 對話、操作檔案和管理工作階段。研究判斷始終由你做。",
+  heroNote: "Skills 永久免費 · Desktop 0.2 Preview",
+  heroFacts: [
+    ["本地工作區", "只在你選定的資料夾內讀寫。"],
+    ["Pi 對話", "串流 Markdown、工具進度與可中止的工作階段。"],
+    ["一次性核准", "Shell 指令與既有檔案覆寫都先等你確認。"],
+  ],
+  desktopScope: [
+    ["平台", "macOS 13+ · Apple Silicon"],
+    ["核心", "本地工作區與可切換的 Pi 對話"],
+    ["權限", "每次操作清楚核准"],
   ],
   methodEyebrow: "不是全自動論文機",
   methodTitle: "把判斷留給研究者",
-  methodBody: "BOYA 自動處理檢索、整理、格式與檢查等可委派工作，但不替你選研究問題、理論、方法、解釋或最終主張。",
+  methodBody: "BOYA 不替你選研究問題、來源、理論、方法、解釋或最終主張。Skills 是公開規則庫；Desktop 只提供受控的本地工作空間與 Pi 對話。",
   principles: [
-    ["人類在環", "研究關卡明確硬停，不把學術判斷藏進自動流程。"],
-    ["證據可追", "引用、事實和產出回到來源；缺失就標待補。"],
-    ["本地工作", "文件與研究產物留在你的工作區，操作留下可檢查紀錄。"],
+    ["人類在環", "研究判斷明確留在你手上，不把學術決策藏進自動流程。"],
+    ["本地優先", "Desktop 只在目前工作區操作，對話工作階段留在本機。"],
+    ["邊界清楚", "Desktop 0.2 不載入 Skills、MCP、Notebook 或遠端運算。"],
   ],
   desktopEyebrow: "BOYA Desktop",
-  desktopTitle: "研究材料、對話與產出，放在同一個工作台",
-  desktopBody: "打開本地資料夾，直接和 BOYA 一起閱讀、分析、寫作；文件預覽、Notebook、執行紀錄與證據鏈不必散落在不同工具。",
-  features: ["本地研究工作區與文件預覽", "十七個 BOYA Skills 內建接力", "Notebook、程式與產出留痕", "macOS Apple Silicon Preview"],
+  desktopTitle: "一個精簡、本地優先的工作台",
+  desktopBody: "BOYA Desktop 0.2 是 macOS Apple Silicon 的 Pi 用戶端：選定工作資料夾、開啟對話、查看串流回應與工具進度，必要時逐次核准操作。",
+  features: ["macOS 13+ · Apple Silicon", "本地工作區與可切換的 Pi 對話", "串流 Markdown、工具進度與可中止操作", "既有檔案覆寫與 Shell 指令逐次核准"],
   skillsEyebrow: "BOYA Skills",
-  skillsTitle: "免費倉庫是整個產品的規則來源",
-  skillsBody: "從研究問題、文獻搜尋、主張查核到投稿對標，十七個 skill 各守一段。內容先在公開倉庫修正，再同步到 Desktop 與網站。",
+  skillsTitle: "規則庫與 Desktop，各自負責",
+  skillsBody: "BOYA Skills 是公開倉庫的唯一真實來源，可以單獨安裝在支援的 Agent。Desktop 0.2 不載入 Skills；網站只同步公開倉庫的內容。",
   supportEyebrow: "需要作者直接協助？",
   supportTitle: "¥199／年的答疑群，買的是持續服務",
   supportBody: "Skills 不收費。作者答疑群提供安裝與使用答疑、版本更新導讀和案例交流。",
 } : {
-  description: "BOYA 博雅把免费、开源的 AI 研究 Skills 与本地优先的 Desktop 工作台连在一起，陪人文社科研究者从读文献走到写论文。",
-  heroBody: "十七个开源 Skills 管研究流程，Desktop 管文件、Notebook、执行记录与证据。每一个只有你能决定的关卡，都会停下来等你拍板。",
-  heroNote: "Skills 永久免费 · Desktop Preview 免费",
-  demoLabel: "实际界面演示",
-  demos: [
-    ["文献审查", "/images/desktop-literature.png", "BOYA Desktop 文献检索、引用审查与 PDF 产出演示"],
-    ["图表与程序", "/images/desktop-figure.png", "BOYA Desktop 图表、程序代码与执行记录演示"],
-    ["Notebook", "/images/desktop-notebook.png", "BOYA Desktop Notebook 与研究任务演示"],
+  description: "BOYA 博雅由两个清楚分工的开源产品组成：免费 Skills 提供研究规则，BOYA Desktop 0.2 提供 macOS 本地 AI 工作台。",
+  heroBody: "Skills 负责研究方法与写作规则；Desktop 0.2 负责在你选定的本地文件夹里与 Pi 对话、操作文件和管理工作阶段。研究判断始终由你做。",
+  heroNote: "Skills 永久免费 · Desktop 0.2 Preview",
+  heroFacts: [
+    ["本地工作区", "只在你选定的文件夹内读写。"],
+    ["Pi 对话", "串流 Markdown、工具进度与可中止的工作阶段。"],
+    ["一次性核准", "Shell 命令与已有文件覆盖都先等你确认。"],
+  ],
+  desktopScope: [
+    ["平台", "macOS 13+ · Apple Silicon"],
+    ["核心", "本地工作区与可切换的 Pi 对话"],
+    ["权限", "每次操作清楚核准"],
   ],
   methodEyebrow: "不是全自动论文机",
   methodTitle: "把判断留给研究者",
-  methodBody: "BOYA 自动处理检索、整理、格式与检查等可委派工作，但不替你选研究问题、理论、方法、解释或最终主张。",
+  methodBody: "BOYA 不替你选研究问题、来源、理论、方法、解释或最终主张。Skills 是公开规则库；Desktop 只提供受控的本地工作空间与 Pi 对话。",
   principles: [
-    ["人类在环", "研究关卡明确硬停，不把学术判断藏进自动流程。"],
-    ["证据可追", "引用、事实和产出回到来源；缺失就标待补。"],
-    ["本地工作", "文件与研究产物留在你的工作区，操作留下可检查记录。"],
+    ["人类在环", "研究判断明确留在你手上，不把学术决策藏进自动流程。"],
+    ["本地优先", "Desktop 只在当前工作区操作，对话工作阶段留在本机。"],
+    ["边界清楚", "Desktop 0.2 不载入 Skills、MCP、Notebook 或远程运算。"],
   ],
   desktopEyebrow: "BOYA Desktop",
-  desktopTitle: "研究材料、对话与产出，放在同一个工作台",
-  desktopBody: "打开本地文件夹，直接和 BOYA 一起阅读、分析、写作；文件预览、Notebook、执行记录与证据链不必散落在不同工具。",
-  features: ["本地研究工作区与文件预览", "十七个 BOYA Skills 内置接力", "Notebook、程序与产出留痕", "macOS Apple Silicon Preview"],
+  desktopTitle: "一个精简、本地优先的工作台",
+  desktopBody: "BOYA Desktop 0.2 是 macOS Apple Silicon 的 Pi 客户端：选择工作文件夹、打开对话、查看串流回应与工具进度，必要时逐次核准操作。",
+  features: ["macOS 13+ · Apple Silicon", "本地工作区与可切换的 Pi 对话", "串流 Markdown、工具进度与可中止操作", "已有文件覆盖与 Shell 命令逐次核准"],
   skillsEyebrow: "BOYA Skills",
-  skillsTitle: "免费仓库是整个产品的规则来源",
-  skillsBody: "从研究问题、文献搜索、主张查核到投稿对标，十七个 skill 各守一段。内容先在公开仓库修正，再同步到 Desktop 与网站。",
+  skillsTitle: "规则库与 Desktop，各自负责",
+  skillsBody: "BOYA Skills 是公开仓库的唯一真实来源，可以单独安装在支持的 Agent。Desktop 0.2 不载入 Skills；网站只同步公开仓库的内容。",
   supportEyebrow: "需要作者直接协助？",
   supportTitle: "¥199／年的答疑群，买的是持续服务",
   supportBody: "Skills 不收费。作者答疑群提供安装与使用答疑、版本更新导读和案例交流。",
@@ -68,15 +76,6 @@ const copy = zh ? {
 ---
 <BaseLayout locale={locale} title={`${t.common.brand}｜${t.common.tagline}`} description={copy.description}>
   <section class="home-hero">
-    <div class="hero-demo" aria-label={copy.demoLabel}>
-      <img data-demo-image src={copy.demos[0][1]} width="1600" height="1000" alt={copy.demos[0][2]} />
-      <span class="demo-label">{copy.demoLabel}</span>
-      <div class="demo-switcher" role="group" aria-label={copy.demoLabel}>
-        {copy.demos.map(([label, src, alt], index) => (
-          <button type="button" data-demo-src={src} data-demo-alt={alt} aria-pressed={index === 0 ? "true" : "false"}>{label}</button>
-        ))}
-      </div>
-    </div>
     <div class="container hero-inner">
       <div class="hero-copy">
         <p class="eyebrow">{t.common.tagline}</p>
@@ -87,6 +86,10 @@ const copy = zh ? {
           <a class="button secondary" href={localePath(locale, "skills")}><GitFork size={18} />{t.action.skills}</a>
         </div>
         <div class="hero-note"><span aria-hidden="true"></span>{copy.heroNote}</div>
+      </div>
+      <div class="hero-facts" aria-label={copy.desktopEyebrow}>
+        <p class="eyebrow">BOYA Desktop 0.2</p>
+        {copy.heroFacts.map(([title, body], index) => <div class="hero-fact"><span class="hero-fact-number">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></div>)}
       </div>
     </div>
   </section>
@@ -105,7 +108,10 @@ const copy = zh ? {
 
   <section class="band">
     <div class="container product-band">
-      <div class="product-shot"><img src="/images/desktop-literature.png" width="1600" height="1000" alt={zh ? "BOYA Desktop 文獻審查與 PDF 產出示範" : "BOYA Desktop 文献审查与 PDF 产出演示"} loading="lazy" /></div>
+      <div class="product-scope">
+        <div class="product-scope-header"><span>BOYA Desktop</span><span>0.2 Preview</span></div>
+        {copy.desktopScope.map(([label, value]) => <div class="product-scope-row"><span>{label}</span><strong>{value}</strong></div>)}
+      </div>
       <div>
         <p class="eyebrow">{copy.desktopEyebrow}</p>
         <h2>{copy.desktopTitle}</h2>
@@ -129,18 +135,4 @@ const copy = zh ? {
       <div><p class="lede">{copy.supportBody}</p><a class="button" href={localePath(locale, "community")}>{t.action.contact}<ArrowRight size={18} /></a></div>
     </div>
   </section>
-<script>
-  const image = document.querySelector<HTMLImageElement>("[data-demo-image]");
-  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-demo-src]");
-  buttons.forEach((button) => button.addEventListener("click", () => {
-    if (!image || button.getAttribute("aria-pressed") === "true") return;
-    image.classList.add("is-switching");
-    window.setTimeout(() => {
-      image.src = button.dataset.demoSrc || image.src;
-      image.alt = button.dataset.demoAlt || image.alt;
-      buttons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
-      image.classList.remove("is-switching");
-    }, 120);
-  }));
-</script>
 </BaseLayout>

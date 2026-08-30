@@ -1,8 +1,9 @@
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://boya-website.pages.dev";
+const downloadVersion = import.meta.env.PUBLIC_DOWNLOAD_VERSION || "";
 const downloadBaseUrl = (import.meta.env.PUBLIC_DOWNLOAD_BASE_URL || "").replace(/\/$/, "");
-const fileName = "BOYA-Desktop_0.1.0_aarch64.dmg";
-const sha256 = import.meta.env.PUBLIC_DOWNLOAD_SHA256 || "27aaa06166c92b5ccf2834217384e255cd769849010f27006864df0b0687b8a8";
-const size = Number(import.meta.env.PUBLIC_DOWNLOAD_SIZE || 72977463);
+const fileName = "BOYA-Desktop_0.2.0_aarch64.dmg";
+const sha256 = import.meta.env.PUBLIC_DOWNLOAD_SHA256 || "";
+const size = Number(import.meta.env.PUBLIC_DOWNLOAD_SIZE || 0);
 
 export const macArtifact = {
   os: "macos",
@@ -13,12 +14,12 @@ export const macArtifact = {
 } as const;
 
 export const releaseManifest = {
-  version: "0.1.0",
+  version: "0.2.0",
   channel: "preview",
-  publishedAt: "2026-07-14T00:00:00+08:00",
+  publishedAt: null,
   releasePageUrl: `${siteUrl}/zh-hant/desktop/#download`,
   minimumSystemVersion: "macOS 13.0",
-  assets: downloadBaseUrl && sha256 && size > 0
+  assets: downloadVersion === "0.2.0" && downloadBaseUrl && sha256 && size > 0
     ? [{
         ...macArtifact,
         url: `${downloadBaseUrl}/${fileName}`,

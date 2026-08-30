@@ -12,7 +12,7 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["iPhone 13"], browserName: "chromium" } },
   ],
   webServer: {
-    command: "pnpm preview --host 127.0.0.1 --port 4321",
+    command: "ASTRO_PREVIEW_BACKGROUND=false pnpm preview --host 127.0.0.1 --port 4321",
     url: "http://127.0.0.1:4321/zh-hant/",
     reuseExistingServer: !process.env.CI,
   },
