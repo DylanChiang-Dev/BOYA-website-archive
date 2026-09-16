@@ -2,6 +2,8 @@
 
 Official bilingual website for BOYA Skills, BOYA Desktop, and the author support group.
 
+> **Migration notice:** Current product, documentation, community, membership, and account services are maintained in [BOYA Web](https://github.com/DylanChiang-Dev/BOYA-web). This repository is retained as the historical Astro source. See [MIGRATION.md](MIGRATION.md).
+
 ## Development
 
 ```bash
